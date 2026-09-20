@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: crud-laravel
+    container_name: laravel
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
@@ -14,7 +14,7 @@ services:
 
   mysql:
     image: mysql:8.0
-    container_name: api-mysql
+    container_name: mysql
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: laravel
@@ -25,6 +25,18 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    depends_on:
+      - mysql
 
 volumes:
   mysql_data:
