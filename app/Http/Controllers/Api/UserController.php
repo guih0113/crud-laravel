@@ -48,9 +48,37 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => false,
-                'message' => 'Failed to create user',
+                'message' => 'Falha ao criar usuário',
                 'error' => $e->getMessage(),
-            ], 500);
+            ], 400);
+        }
+    }
+
+    public function update(UserRequest $request, User $user) : JsonResponse {
+        DB::beginTransaction();
+
+        try {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Usuário editado com sucesso!',
+                'user' => $user,
+            ], 200);
+        } catch(Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Falha ao editar usuário',
+                'error' => $e->getMessage(),
+            ], 400);
         }
     }
 }
