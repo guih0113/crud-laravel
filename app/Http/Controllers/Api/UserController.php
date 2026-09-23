@@ -81,4 +81,25 @@ class UserController extends Controller
             ], 400);
         }
     }
+
+    public function destroy(User $user) : JsonResponse {
+        try {
+            $user->delete();
+            
+            return response()->json([
+                'status' => true,
+                'message' => 'Usuário excluído com sucesso!',
+                'user' => $user,
+            ], 200);
+
+        } catch(Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Falha ao excluir usuário',
+                'error' => $e->getMessage(),
+            ], 400);
+        }
+    }
 }
