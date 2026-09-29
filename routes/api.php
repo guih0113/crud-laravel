@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\LivroController;
 
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{user}', [UserController::class, 'show']);
-Route::post('/users', [UserController::class, 'store']);
-Route::put('/users/{user}', [UserController::class, 'update']);
-Route::delete('/users/{user}', [UserController::class, 'destroy']);
+Route::get('/livros', [LivroController::class, 'index']);
+Route::get('/livros/{livro}', [LivroController::class, 'show']);
+Route::post('/livros', [LivroController::class, 'store']);
+Route::put('/livros/{livro}', [LivroController::class, 'update']);
+Route::delete('/livros/{livro}', [LivroController::class, 'destroy']);

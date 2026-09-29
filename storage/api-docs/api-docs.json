@@ -1,0 +1,439 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "CRUD Laravel API",
+        "description": "API para gerenciamento de livros.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/livros": {
+            "get": {
+                "tags": [
+                    "Livros"
+                ],
+                "summary": "Lista os livros",
+                "operationId": "410c905dcb6c7d8f27bd0a36d1463d2c",
+                "responses": {
+                    "200": {
+                        "description": "Lista paginada de livros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "livros": {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Livro"
+                                                    }
+                                                },
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "servers": [
+                    {
+                        "url": "/api",
+                        "description": "Servidor da API"
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Livros"
+                ],
+                "summary": "Cadastra um livro",
+                "operationId": "a17b7c01f72e928ad8a102d82adab412",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LivroInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Livro cadastrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Livro cadastrado com sucesso!"
+                                        },
+                                        "livro": {
+                                            "$ref": "#/components/schemas/Livro"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Dados inválidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "servers": [
+                    {
+                        "url": "/api",
+                        "description": "Servidor da API"
+                    }
+                ]
+            }
+        },
+        "/livros/{livro}": {
+            "get": {
+                "tags": [
+                    "Livros"
+                ],
+                "summary": "Exibe um livro",
+                "operationId": "2dad1af204d25ab3ad725f9e3cea0996",
+                "parameters": [
+                    {
+                        "name": "livro",
+                        "in": "path",
+                        "description": "ID do livro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Livro encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "livro": {
+                                            "$ref": "#/components/schemas/Livro"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Livro não encontrado"
+                    }
+                },
+                "servers": [
+                    {
+                        "url": "/api",
+                        "description": "Servidor da API"
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Livros"
+                ],
+                "summary": "Atualiza um livro",
+                "operationId": "ba33a2241b5a275492e50fd5d1bcfd43",
+                "parameters": [
+                    {
+                        "name": "livro",
+                        "in": "path",
+                        "description": "ID do livro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LivroInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Livro editado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Livro editado com sucesso!"
+                                        },
+                                        "livro": {
+                                            "$ref": "#/components/schemas/Livro"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Livro não encontrado"
+                    },
+                    "422": {
+                        "description": "Dados inválidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "servers": [
+                    {
+                        "url": "/api",
+                        "description": "Servidor da API"
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Livros"
+                ],
+                "summary": "Exclui um livro",
+                "operationId": "e67d49ef0e6523a4e786a245dfa2beb9",
+                "parameters": [
+                    {
+                        "name": "livro",
+                        "in": "path",
+                        "description": "ID do livro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Livro excluído com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Livro excluído com sucesso!"
+                                        },
+                                        "livro": {
+                                            "$ref": "#/components/schemas/Livro"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Livro não encontrado"
+                    }
+                },
+                "servers": [
+                    {
+                        "url": "/api",
+                        "description": "Servidor da API"
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Livro": {
+                "required": [
+                    "id",
+                    "titulo",
+                    "autor",
+                    "genero",
+                    "numero_paginas",
+                    "avaliacao",
+                    "data_lancamento"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "titulo": {
+                        "type": "string",
+                        "example": "O Hobbit"
+                    },
+                    "autor": {
+                        "type": "string",
+                        "example": "J. R. R. Tolkien"
+                    },
+                    "genero": {
+                        "type": "string",
+                        "example": "Fantasia"
+                    },
+                    "numero_paginas": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 310
+                    },
+                    "avaliacao": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 9.5,
+                        "maximum": 10,
+                        "minimum": 0
+                    },
+                    "data_lancamento": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "1937-09-21"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "LivroInput": {
+                "required": [
+                    "titulo",
+                    "autor",
+                    "genero",
+                    "numero_paginas",
+                    "avaliacao",
+                    "data_lancamento"
+                ],
+                "properties": {
+                    "titulo": {
+                        "type": "string",
+                        "example": "O Hobbit",
+                        "maxLength": 255
+                    },
+                    "autor": {
+                        "type": "string",
+                        "example": "J. R. R. Tolkien",
+                        "maxLength": 255
+                    },
+                    "genero": {
+                        "type": "string",
+                        "example": "Fantasia",
+                        "maxLength": 255
+                    },
+                    "numero_paginas": {
+                        "type": "integer",
+                        "example": 310,
+                        "minimum": 1
+                    },
+                    "avaliacao": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 9.5,
+                        "maximum": 10,
+                        "minimum": 0
+                    },
+                    "data_lancamento": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "1937-09-21"
+                    }
+                },
+                "type": "object"
+            },
+            "ValidationError": {
+                "properties": {
+                    "status": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "errors": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Livros",
+            "description": "Operacoes de CRUD para livros."
+        }
+    ]
+}
